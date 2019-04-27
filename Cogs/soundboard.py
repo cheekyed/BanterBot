@@ -26,6 +26,7 @@ class SoundboardCog(commands.Cog):
 
 	@commands.command(name='join',description="This commanded needs to be run first before all other commands") 
 	async def join(self,ctx):
+		author = ctx.message.author
 		if author.voice != None:
 			print("joined")
 			VoiceChannel = author.voice.channel
