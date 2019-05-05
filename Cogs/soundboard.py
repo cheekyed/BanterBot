@@ -44,18 +44,23 @@ class SoundboardCog(commands.Cog):
 				return await x.disconnect()
 
 	
-	@commands.command(name="play", description = "Requires u to be in a voice channel first ie !join command")
+	@commands.command(name="play", description = "Requires u and bot to be in a voice channel first ie !join command")
 	async def play_audio(self,ctx,*,message):
 		print(self.bot.voice_clients)
+		author = ctx.message.author
 		if not self.bot.voice_clients:
-				author = ctx.message.author
-				response = author.mention + " PLS READ INSTRUCTIONS. NEED TO BE IN VOICE CHANNEL DUMASS"
+				response = author.mention + " BOT MUST BE IN VOICE CHANNEL DUMASS"
 				await ctx.send(response) 
 				print("Requires you to be in voice channel")
-		for x in self.bot.voice_clients:
-			if(x.guild == ctx.message.guild):
-				if message in self.sound_list:
-					x.play(discord.FFmpegPCMAudio(self.folder + '/'+ message + '.mp3'), after=lambda e: print('done', e))
+		elif author.voice == None:
+			await ctx.send(author.mention + " PLS READ INSTRUCTIONS. NEED TO BE IN BOTS VOICE CHANNEL DUMASS")
+		else: 
+			for x in self.bot.voice_clients:
+				if(x.guild == ctx.message.guild):
+					if message in self.sound_list and author.voice.channel == x.channel:
+						x.play(discord.FFmpegPCMAudio(self.folder + '/'+ message + '.mp3'), after=lambda e: print('done', e))
+	
+						
 				
 
 
