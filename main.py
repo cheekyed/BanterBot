@@ -21,7 +21,7 @@ async def on_ready():
 
 @client.event
 async def on_member_join(member):
-	welcomeMessage = 'Welcome to ' + member.guild + "Channel"
+	welcomeMessage = 'Welcome to ' + str(member.guild) + "Channel"
 	await member.send(welcomeMessage)
 
 def main():
